@@ -1,0 +1,11 @@
+.center-div {
+    margin: 0 auto;
+}
+
+.accordion .accordion-button, .card {
+    background-color: #dfdfdf !important;
+}
+
+.accordion .accordion-item {
+    border-color: #888;
+}
