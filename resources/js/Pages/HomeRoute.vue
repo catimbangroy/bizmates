@@ -37,17 +37,18 @@ const getWeather = async (value) => {
     <div>
         <h1 class="text-center my-4">Welcome to Weather Forecast</h1>
         <div class="text-center table-responsive">
-            <b-button class="mx-1" @click.prevent="getPlace('Tokyo,JP')">Tokyo</b-button>
-            <b-button class="mx-1" @click.prevent="getPlace('Yokohama,JP')">Yokohama</b-button>
-            <b-button class="mx-1" @click.prevent="getPlace('Kyoto,JP')">Kyoto</b-button>
-            <b-button class="mx-1" @click.prevent="getPlace('Osaka,JP')">Osaka</b-button>
-            <b-button class="mx-1" @click.prevent="getPlace('Sapporo,JP')">Sapporo</b-button>
-            <b-button class="mx-1" @click.prevent="getPlace('Nagoya,JP')">Nagoya</b-button>
+            <b-button class="mx-1 mt-3" @click.prevent="getPlace('Tokyo,JP')">Tokyo</b-button>
+            <b-button class="mx-1 mt-3" @click.prevent="getPlace('Yokohama,JP')">Yokohama</b-button>
+            <b-button class="mx-1 mt-3" @click.prevent="getPlace('Kyoto,JP')">Kyoto</b-button>
+            <b-button class="mx-1 mt-3" @click.prevent="getPlace('Osaka,JP')">Osaka</b-button>
+            <b-button class="mx-1 mt-3" @click.prevent="getPlace('Sapporo,JP')">Sapporo</b-button>
+            <b-button class="mx-1 mt-3" @click.prevent="getPlace('Nagoya,JP')">Nagoya</b-button>
         </div>
 
-        <div class="center-div mt-3 col-11" v-if="responseWeather">
+        <div class="center-div mt-3 col-11 card-container" v-if="responseWeather">
             <div class="card float-start p-2 m-2" v-for="(weather, i) in responseWeather.data.list" :key="i">
-                {{ weather.dt_txt.replace(/:[^:]*$/,'') }} <div class="text-capitalize">{{ weather.weather[0].description }}</div>
+                <div class="fw-semibold">{{ weather.dt_txt }}</div>
+                <div class="fw-semibold text-capitalize">{{ weather.weather[0].description }}</div>
                 <div class="weather-icon">
                     <img :src="'https://openweathermap.org/img/w/' + weather.weather[0].icon + '.png'" />
                 </div>
@@ -57,8 +58,8 @@ const getWeather = async (value) => {
             </div>
         </div>
 
-        <div style="clear:both" class="pt-5"><h1 class="text-center">Places to visit</h1></div>
-            <div class="mt-5 col-10 center-div accordion accordion-flush" v-if="response" id="accordionExample">
+        <div style="clear:both" class="mt-5 col-10 center-div accordion accordion-flush" v-if="response" id="accordionExample">
+            <div class="pt-5"><h1 class="text-center">Places to visit</h1></div>
                 <div class="accordion-item" v-for="(place, i) in response.data.results" :key="i">
                     <h2 class="accordion-header" :id="'heading' + i">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="'#collapse' + i" aria-expanded="false" :aria-controls="'collapse' + i">

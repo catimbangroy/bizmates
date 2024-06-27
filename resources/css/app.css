@@ -9,3 +9,37 @@
 .accordion .accordion-item {
     border-color: #888;
 }
+
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+@media screen and (min-width: 1000px) {
+    .card-container {
+        max-width: 50%;
+    }
+}
+
+.card {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+@media screen and (max-width: 1000px) {
+    .card {
+        font-size: 2vw;
+    }
+}
+
+h1 {
+    font-family: Oswald, impact, sans-serif;
+    font-size: 40px !important;
+    font-weight: 500 !important;
+    text-transform: uppercase;
+    line-height: 1 !important;
+}

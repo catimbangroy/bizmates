@@ -44,6 +44,11 @@ return [
     'weathermap' => [
         'base_url' => env('WEATHERMAP_API_BASE_URL'),
         'api_token' => env('WEATHERMAP_API_TOKEN'),
+        'cnt' => env('WEATHERMAP_API_LIMIT'),
+    ],
+
+    'date' => [
+        'format' => env('DEFAULT_DATE_FORMAT'),
     ]
 
 ];
