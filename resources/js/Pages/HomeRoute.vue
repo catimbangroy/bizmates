@@ -4,8 +4,21 @@ import { ref } from "vue";
 
 const response = ref();
 const responseWeather = ref();
+const buttons = ref([
+  { isPressed: '', place: 'Tokyo', placeValue: 'Tokyo,JP' },
+  { isPressed: '', place: 'Yokohama', placeValue: 'Yokohama,JP'  },
+  { isPressed: '', place: 'Kyoto', placeValue: 'Kyoto,JP'  },
+  { isPressed: '', place: 'Osaka', placeValue: 'Osaka,JP'  },
+  { isPressed: '', place: 'Sapporo', placeValue: 'Sapporo,JP'  },
+  { isPressed: '', place: 'Nagoya', placeValue: 'Nagoya,JP'  },
+]);
 
-const getPlace = async (value) => {
+const getPlace = async (value, place, index) => {
+    // console.log(place);
+    // selectedPlace = place;
+    buttons.value.forEach((button, idx) => {
+        button.isPressed = idx === index ? 'active' : '';
+    });
     try {
         await getWeather(value);
         response.value = await axios.get("/api/place", {
@@ -13,10 +26,12 @@ const getPlace = async (value) => {
                 data: { near: value }
             }
         });
+        response.value.selectedPlace = place;
     } catch (error) {
         // Do something with the error
         console.log(error);
     }
+// console.log(response.selectedPlace);
 };
 
 const getWeather = async (value) => {
@@ -37,12 +52,15 @@ const getWeather = async (value) => {
     <div>
         <h1 class="text-center my-4">Welcome to Weather Forecast</h1>
         <div class="text-center table-responsive">
-            <b-button class="mx-1 mt-3" @click.prevent="getPlace('Tokyo,JP')">Tokyo</b-button>
-            <b-button class="mx-1 mt-3" @click.prevent="getPlace('Yokohama,JP')">Yokohama</b-button>
-            <b-button class="mx-1 mt-3" @click.prevent="getPlace('Kyoto,JP')">Kyoto</b-button>
-            <b-button class="mx-1 mt-3" @click.prevent="getPlace('Osaka,JP')">Osaka</b-button>
-            <b-button class="mx-1 mt-3" @click.prevent="getPlace('Sapporo,JP')">Sapporo</b-button>
-            <b-button class="mx-1 mt-3" @click.prevent="getPlace('Nagoya,JP')">Nagoya</b-button>
+            <b-button
+                v-for="(button, index) in buttons"
+                variant="primary" 
+                :key="index"
+                @click="getPlace(button.placeValue, button.place, index)"
+                :class="button.isPressed + ' mx-1 mt-3'"
+            >
+                {{ button.place }}
+            </b-button>
         </div>
 
         <div class="center-div mt-3 col-11 card-container" v-if="responseWeather">
@@ -59,7 +77,7 @@ const getWeather = async (value) => {
         </div>
 
         <div style="clear:both" class="mt-5 col-10 center-div accordion accordion-flush" v-if="response" id="accordionExample">
-            <div class="pt-5"><h1 class="text-center">Places to visit</h1></div>
+            <div class="pt-5"><h1 class="text-center">Places to visit in {{ response.selectedPlace }}</h1></div>
                 <div class="accordion-item" v-for="(place, i) in response.data.results" :key="i">
                     <h2 class="accordion-header" :id="'heading' + i">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="'#collapse' + i" aria-expanded="false" :aria-controls="'collapse' + i">
